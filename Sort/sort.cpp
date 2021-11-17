@@ -159,6 +159,7 @@ void mergeSort(SortObject *pVector){
         length*=2;
     }
 }
+
 int main(){
     SortObject *List=InitSortObject();
     mergeSort(List);
