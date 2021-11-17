@@ -60,9 +60,6 @@ void binSort(SortObject* pVector){
         if(left!=i)data[left]=temp;
     }
 }
-/*表插入排序*/
-
-
 
 /*shell排序*/
 void shellSort(SortObject* pVector){
@@ -79,6 +76,7 @@ void shellSort(SortObject* pVector){
         }
     }
 }
+
 /*选择排序*/
 void selectSort(SortObject *pVector){
     int i,j,k;
@@ -127,6 +125,7 @@ void quickSort(SortObject *pVector,int l,int r){
     quickSort(pVector,l,i-1);
     quickSort(pVector,i+1,r);
 }
+
 /*归并排序*/
 void merge(DataType* r,DataType *r1,int low,int m,int high){
     int i,j,k;
@@ -160,10 +159,85 @@ void mergeSort(SortObject *pVector){
     }
 }
 
+/*堆排序*/
+void sift(SortObject *pVector,int size,int p){//建堆
+    DataType temp=pVector->record[p];
+    int child=2*p+1;
+    while(child<size){
+        if((child<size-1)&&pVector->record[child]<pVector->record[child+1])
+            child++;
+        if(temp<pVector->record[child]){
+            pVector->record[p]=pVector->record[child];
+            p=child;child=2*p+1;
+        }
+        else break;
+    }
+    pVector->record[p]=temp;
+}
+void heapSort(SortObject *pVector){
+    int i,n;
+    n=pVector->n;
+    for (i =n/2-1; i >= 0; i--) { sift(pVector, n, i); }//n/2-1:有叶子结点的最大结点位置
+    for(i=n-1;i>0;i--){
+        swap(&pVector->record[0],&pVector->record[i]);
+        sift(pVector,i,0);
+    }
+}
+
+/*表插入排序*/
+struct Node;
+typedef struct Node ListNode;
+struct Node{
+    DataType info;
+    ListNode *next;
+};
+typedef ListNode* LinkList;
+
+void listSort(){
+    int n,temp,i=0;
+    LinkList plist=(LinkList) malloc(sizeof(ListNode));
+    LinkList head0=plist; //头指针
+    scanf("%d",&n);
+    plist->next = (LinkList)malloc(sizeof (ListNode)*n);
+    while(i!=n){
+        scanf("%d",&temp);
+        plist->info=temp;
+        plist=plist->next;i++;
+    }
+    while(n--){
+        printf("%d ",head0->info);
+        head0=head0->next;
+    }
+    printf("%d\n",head0->info);
+    ListNode *now,*pre,*p,*q,*head;
+    head=head0;
+    pre=head->next;
+    if (pre != NULL) {
+        now = pre->next;
+        if (now != NULL) {//只有一个元素
+            while (now != NULL) {
+                q = head;
+                p = head->next;
+                while (p != now && p->info <= now->info) { q = p, p = p->next; }
+                if(p==now){//放在原位置
+                    pre=pre->next;now=pre->next;continue;
+                }
+                pre->next=now->next;
+                q->next=now;now->next=p;
+                now=pre->next;
+            }
+        }
+    }
+    while(n--){
+        printf("%d ",head0->info);
+        head0=head0->next;
+    }
+    printf("%d\n",head0->info);
+}
 int main(){
-    SortObject *List=InitSortObject();
-    mergeSort(List);
-    print(List);
+    //SortObject *List=InitSortObject();
+    listSort();
+    //print(List);
 }
 /* 6
 12 1 5 16 10 7
