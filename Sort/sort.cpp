@@ -1,5 +1,6 @@
 #include <cstdio>
 #include <cstdlib>
+
 typedef int DataType;
 typedef struct {
     int n;//Init
@@ -185,58 +186,79 @@ void heapSort(SortObject *pVector){
 }
 
 /*表插入排序*/
-struct Node;
-typedef struct Node ListNode;
-struct Node{
-    DataType info;
-    ListNode *next;
-};
-typedef ListNode* LinkList;
 
-void listSort(){
-    int n,temp,i=0;
-    LinkList plist=(LinkList) malloc(sizeof(ListNode));
-    LinkList head0=plist; //头指针
-    scanf("%d",&n);
-    plist->next = (LinkList)malloc(sizeof (ListNode)*n);
-    while(i!=n){
-        scanf("%d",&temp);
-        plist->info=temp;
-        plist=plist->next;i++;
-    }
-    while(n--){
-        printf("%d ",head0->info);
-        head0=head0->next;
-    }
-    printf("%d\n",head0->info);
-    ListNode *now,*pre,*p,*q,*head;
-    head=head0;
-    pre=head->next;
-    if (pre != NULL) {
-        now = pre->next;
-        if (now != NULL) {//只有一个元素
-            while (now != NULL) {
-                q = head;
-                p = head->next;
-                while (p != now && p->info <= now->info) { q = p, p = p->next; }
-                if(p==now){//放在原位置
-                    pre=pre->next;now=pre->next;continue;
-                }
-                pre->next=now->next;
-                q->next=now;now->next=p;
-                now=pre->next;
-            }
+typedef struct LNode
+{
+    DataType data;
+    struct LNode *next;
+}LNode, *LinkList;
+
+LinkList CreatLink(int num);
+LinkList LinkInsertSort(LinkList head);
+int PrintLink(LinkList head);
+
+
+LinkList CreatLink(int num)
+{
+    int i, data;
+    //p指向当前链表中最后一个结点，q指向准备插入的结点。
+    LinkList head = NULL, p = NULL, q;
+
+    for (i = 0; i < num; i++)
+    {
+        scanf("%d", &data);
+        q = (LinkList)malloc(sizeof(LNode));
+        q->data = data;
+        q->next = NULL;
+        if (i == 0)
+        {
+            head = q;
         }
+        else
+        {
+            p->next = q;
+        }
+        p = q;
     }
-    while(n--){
-        printf("%d ",head0->info);
-        head0=head0->next;
-    }
-    printf("%d\n",head0->info);
+    return head;
 }
+
+/*表插入排序*/
+LinkList LinkInsertSort(LinkList head)
+{
+    //current指向当前待插入的结点。
+    LinkList head2, current, p, q;
+    if (head == NULL)return head;//第一次拆分。
+    head2 = head->next;
+    head->next = NULL;
+    while (head2)
+    {   current = head2;
+        head2 = head2->next;
+        //寻找插入位置，插入位置为结点p和q中间。
+        for (p = NULL, q = head; q && q->data <= current->data; p = q, q = q->next);
+        if (q == head)
+        {//将current插入最前面。
+            head = current;
+        }
+        else
+        {
+            p->next = current;
+        }
+        current->next = q;
+    }
+    return head;
+}
+int PrintLink(LinkList head)
+{
+    LinkList p;
+    for (p = head; p ;p = p->next)
+        printf("%d ", p->data);
+    return 0;
+}
+
 int main(){
     //SortObject *List=InitSortObject();
-    listSort();
+    //排序函数
     //print(List);
 }
 /* 6
