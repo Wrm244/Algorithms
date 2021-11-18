@@ -126,7 +126,7 @@ void quickSort(SortObject *pVector,int l,int r){
     quickSort(pVector,l,i-1);
     quickSort(pVector,i+1,r);
 }
-
+ 
 /*归并排序*/
 void merge(DataType* r,DataType *r1,int low,int m,int high){
     int i,j,k;
