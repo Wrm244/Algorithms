@@ -1,0 +1,3 @@
+"D:\Program Files\JetBrains\apps\CLion\ch-0\212.5457.51\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\LinkedList.dir/objects.a
+"D:\Program Data Files\mingw64\bin\ar.exe" cr CMakeFiles\LinkedList.dir/objects.a @CMakeFiles\LinkedList.dir\objects1.rsp
+"D:\Program Data Files\mingw64\bin\g++.exe" -g -Wl,--whole-archive CMakeFiles\LinkedList.dir/objects.a -Wl,--no-whole-archive -o LinkedList.exe -Wl,--out-implib,libLinkedList.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\LinkedList.dir\linklibs.rsp
