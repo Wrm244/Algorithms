@@ -11,4 +11,10 @@ cstdio
 -
 cstdlib
 -
+stdlib.h
+-
+stdio.h
+-
+time.h
+-
 
